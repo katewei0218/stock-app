@@ -2,6 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="證券效益">
@@ -16,7 +17,7 @@
   --radius:14px;--shadow:0 2px 12px rgba(90,60,40,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,'Helvetica Neue',sans-serif;font-size:14px;min-height:100vh;padding-bottom:88px + env(safe-area-inset-bottom));padding-top: env(safe-area-inset-top);
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Helvetica Neue',sans-serif;font-size:14px;min-height:100vh;width: 100vw;padding-bottom:88px + env(safe-area-inset-bottom));padding-top: env(safe-area-inset-top);
 }
 
 /* NAV */
@@ -392,6 +393,13 @@ select option{background:#fff;color:var(--text);}
 </div>
 
 <script>
+// 強制修正 iOS App 模式下的縮放問題
+if (window.navigator.standalone) {
+    var meta = document.querySelector('meta[name="viewport"]');
+    if (meta) {
+        meta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover";
+    }
+}
 // 防止全螢幕模式下點擊按鈕或連結跳出 App
 if (("standalone" in window.navigator) && window.navigator.standalone) {
     document.addEventListener('click', function(e) {
