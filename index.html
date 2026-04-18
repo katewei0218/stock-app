@@ -2,7 +2,9 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="證券效益">
 <title>證券績效追蹤</title>
 <style>
 :root{
@@ -14,7 +16,8 @@
   --radius:14px;--shadow:0 2px 12px rgba(90,60,40,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,'Helvetica Neue',sans-serif;font-size:14px;min-height:100vh;padding-bottom:88px;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Helvetica Neue',sans-serif;font-size:14px;min-height:100vh;padding-bottom:88px + env(safe-area-inset-bottom));padding-top: env(safe-area-inset-top);
+}
 
 /* NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -2px 12px rgba(90,60,40,.08);}
@@ -389,6 +392,17 @@ select option{background:#fff;color:var(--text);}
 </div>
 
 <script>
+// 防止全螢幕模式下點擊按鈕或連結跳出 App
+if (("standalone" in window.navigator) && window.navigator.standalone) {
+    document.addEventListener('click', function(e) {
+        let noddy = e.target;
+        while (noddy.nodeName !== "A" && noddy.nodeName !== "HTML") noddy = noddy.parentNode;
+        if ("href" in noddy && noddy.href.indexOf('http') !== -1) {
+            e.preventDefault();
+            window.location.href = noddy.href;
+        }
+    }, false);
+}
 // --- 1. 設定區 ---
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxU86gJEsylo5VGfMzWIsgUu70CdKFMactz3PK14rSjbIXa6k9qNHaM27zgtxzRbxcUcA/exec'; 
 
